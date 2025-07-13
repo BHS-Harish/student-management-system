@@ -31,7 +31,7 @@ exports.createTeacher = async (req, res) => {
 
         const teacher = new Teacher({ name, email, phone, password, department });
         await teacher.save();
-        res.status(201).json({  success:true, message: 'Teacher created successfully', teacher });
+        res.status(201).json({ success: true, message: 'Teacher created successfully', teacher });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -55,12 +55,13 @@ exports.loginTeacher = async (req, res) => {
         }
 
         // Generate JWT
-        const token = jwt.sign({ id: teacher._id, email: teacher.email,department:teacher.department }, process.env.JWT_SECRET || 'secretkey', { expiresIn: '1d' });
+        const token = jwt.sign({ id: teacher._id, email: teacher.email, department: teacher.department }, process.env.JWT_SECRET || 'secretkey', { expiresIn: '1d' });
 
         // Set cookie
         res.cookie('teacherToken', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'None',
+            secure: true,
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
 
