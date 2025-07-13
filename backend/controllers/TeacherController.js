@@ -86,6 +86,10 @@ exports.getProfile = async (req, res) => {
 
 // Logout controller: clears auth cookie
 exports.logoutTeacher = (req, res) => {
-    res.clearCookie('teacherToken');
+    res.clearCookie('teacherToken', {
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+    });
     res.status(200).json({ success: true, message: 'Logged out successfully.' });
 };
