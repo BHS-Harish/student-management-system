@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api'; // Adjust based on your backend URL
+const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL; 
+console.log(`API Base URL: ${API_BASE_URL}`); // For debugging purposes, can be removed later
+// Adjust based on your backend URL
 
 export async function registerTeacher(teacherData) {
     let result=null;
